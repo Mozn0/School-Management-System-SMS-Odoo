@@ -1,0 +1,26 @@
+<odoo>
+    <menuitem id="menu_school_root" name="SMS" />
+    <menuitem id="menu_school_student_action" name="Students"
+        parent="menu_school_root" action="action_school_student" sequence="1" />
+    <menuitem id="menu_school_academic_year" name="Academic Years" parent="menu_school_root"
+        action="action_school_academic_year" sequence="3" />
+    <menuitem id="menu_school_class" name="Classes" parent="menu_school_root"
+        action="action_school_class" sequence="4" />
+    <menuitem id="menu_school_subjects" name="Subjects" parent="menu_school_root"
+        action="action_school_subject" sequence="5" />
+    <menuitem id="menu_school_teachers" name="Teachers" parent="menu_school_root"
+        action="action_school_teacher" sequence="2" />
+    <menuitem id="menu_school_class_subjects" name="Class Subjects"
+        parent="menu_school_root" action="action_school_class_subject" sequence="6" />
+    <menuitem id="menu_school_section" name="Sections"
+        parent="menu_school_root" action="action_school_section" sequence="7" />
+    <menuitem id="menu_exam" name="Exams" parent="menu_school_root" action="action_exam"
+        sequence="8" />
+    <menuitem id="menu_fee" name="Fees" parent="menu_school_root"
+        action="action_fee" />
+    <menuitem id="menu_attendance" name="Attendance" parent="menu_school_root"
+        action="action_attendance" />
+    <menuitem id="menu_school_parent" name="Parents" parent="menu_school_root"
+        action="action_school_parent" />
+
+</odoo>

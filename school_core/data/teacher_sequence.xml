@@ -1,0 +1,10 @@
+<odoo>
+  <record id="seq_school_teacher" model="ir.sequence">
+    <field name="name">Reacher ID</field>
+    <field name="code">school.teacher</field>
+    <field name="prefix">TCH</field>
+    <field name="padding">4</field>
+    <field name="number_next">1</field>
+    <field name="number_increment">1</field>
+  </record>
+</odoo>

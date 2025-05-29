@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Fee Collection Dashboard -->
+    <template id="fee_dashboard_page" name="Fee Dashboard">
+        <t t-call="website.layout">
+            <div class="oe_structure">
+                <div class="container mt-4">
+
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <h2 class="text-center">Fee Collection Dashboard</h2>
+                            <div class="row mb-3">
+                                <div class="col-md-6 offset-md-3">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <form method="get" action="">
+                                                <div class="input-group">
+                                                    <select name="academic_year_id" class="form-control"
+                                                            onchange="this.form.submit()">
+                                                        <option value="">All Academic Years</option>
+                                                        <t t-foreach="academic_years" t-as="year">
+                                                            <option t-att-value="year.id"
+                                                                    t-att-selected="selected_year_id == str(year.id)">
+                                                                <t t-esc="year.name"/>
+                                                            </option>
+                                                        </t>
+                                                    </select>
+                                                    <div class="input-group-append">
+                                                        <button type="submit" class="btn btn-primary">Filter
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr/>
+                        </div>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-header bg-primary text-white">
+                                    <h5>Total Fees</h5>
+                                </div>
+                                <div class="card-body text-center">
+                                    <h3 t-esc="fee_stats.get('total_fees', 0)"/>
+                                    <p class="text-muted">Total Amount:
+                                        <t t-esc="fee_stats.get('total_amount', 0)"/>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-header bg-success text-white">
+                                    <h5>Paid Fees</h5>
+                                </div>
+                                <div class="card-body text-center">
+                                    <h3 t-esc="fee_stats.get('paid_fees', 0)"/>
+                                    <p class="text-muted">Amount:
+                                        <t t-esc="fee_stats.get('paid_amount', 0)"/>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-md-4">
+                            <div class="card">
+                                <div class="card-header bg-danger text-white">
+                                    <h5>Unpaid Fees</h5>
+                                </div>
+                                <div class="card-body text-center">
+                                    <h3 t-esc="fee_stats.get('unpaid_fees', 0)"/>
+                                    <p class="text-muted">Amount:
+                                        <t t-esc="fee_stats['total_amount'] - fee_stats['paid_amount']"/>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Collection Rate -->
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <div class="card">
+                                <div class="card-header">
+                                    <h5>Collection Rate</h5>
+                                </div>
+                                <div class="card-body">
+                                    <div class="progress">
+                                        <div class="progress-bar bg-success" role="progressbar"
+                                             t-att-style="'width: ' + str(fee_stats['collection_rate']) + '%;'"
+                                             t-att-aria-valuenow="fee_stats['collection_rate']"
+                                             aria-valuemin="0" aria-valuemax="100">
+                                            <t t-esc="fee_stats['collection_rate']"/>%
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                      <!-- Monthly Collection -->
+
+                    <t t-if="fee_stats.get('show_monthly', False)">
+                        <div class="row">
+                              <div class="col-12">
+                                  <div class="card">
+                                      <div class="card-header">
+                                          <h5>Monthly Collection</h5>
+                                      </div>
+                                      <div class="card-body">
+                                          <table class="table table-striped">
+                                              <thead>
+                                                  <tr>
+                                                      <th>Month</th>
+                                                      <th>Amount Collected</th>
+                                                  </tr>
+                                              </thead>
+                                              <tbody>
+                                                  <t t-foreach="fee_stats['monthly_data']" t-as="month">
+                                                      <tr>
+                                                          <td>
+                                                              <t t-esc="month"/>
+                                                          </td>
+                                                          <td>
+                                                              <t t-esc="fee_stats['monthly_data'][month]"/>
+                                                          </td>
+                                                      </tr>
+                                                  </t>
+                                              </tbody>
+                                          </table>
+                                      </div>
+                                  </div>
+                              </div>
+                          </div>
+                    </t>
+
+                </div>
+            </div>
+        </t>
+    </template>
+
+    <!-- Student Statistics Dashboard -->
+    <template id="student_dashboard_page" name="Student Dashboard">
+        <t t-call="website.layout">
+            <div class="oe_structure">
+                <div class="container mt-4">
+
+                    <div class="row mb-3">
+                        <div class="col-md-6 offset-md-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <form method="get" action="">
+                                        <div class="input-group">
+                                            <select name="academic_year_id" class="form-control"
+                                                    onchange="this.form.submit()">
+                                                <option value="">All Academic Years</option>
+                                                <t t-foreach="academic_years" t-as="year">
+                                                    <option t-att-value="year.id"
+                                                            t-att-selected="selected_year_id == str(year.id)">
+                                                        <t t-esc="year.name"/>
+                                                    </option>
+                                                </t>
+                                            </select>
+                                            <div class="input-group-append">
+                                                <button type="submit" class="btn btn-primary">Filter</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-4">
+                        <div class="col-12">
+                            <h2 class="text-center">Student Statistics Dashboard</h2>
+                        </div>
+                    </div>
+
+                    <t t-if="not student_stats.get('has_data', True)">
+                        <div class="alert alert-info text-center">
+                            No student data found for the selected academic year.
+                        </div>
+                    </t>
+
+                    <!-- Student Statistics Cards -->
+                    <t t-if="student_stats.get('has_data', False)">
+                        <div class="row mb-4">
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-header bg-info text-white">
+                                        <h5>Total Students</h5>
+                                    </div>
+                                    <div class="card-body text-center">
+                                        <h3 t-esc="student_stats.get('total_students', 0)"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-header bg-primary text-white">
+                                        <h5>Male Students</h5>
+                                    </div>
+                                    <div class="card-body text-center">
+                                        <h3 t-esc="student_stats.get('male_students', 0)"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="card">
+                                    <div class="card-header bg-primary text-white">
+                                        <h5>Female Students</h5>
+                                    </div>
+                                    <div class="card-body text-center">
+                                        <h3 t-esc="student_stats.get('female_students', 0)"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="card mb-4">
+                            <div class="card-header">
+                                <h5>Class Distribution</h5>
+                            </div>
+                            <div class="card-body">
+                                <table class="table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th>Class</th>
+                                            <th>Number of Students</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <t t-foreach="student_stats.get('class_distribution', {})" t-as="cls">
+                                            <tr>
+                                                <td>
+                                                    <t t-esc="cls"/>
+                                                </td>
+                                                <td>
+                                                    <t t-esc="student_stats['class_distribution'][cls]"/>
+                                                </td>
+                                            </tr>
+                                        </t>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </t>
+                </div>
+            </div>
+        </t>
+    </template>
+
+
+    <!-- Actions -->
+    <record id="action_fee_dashboard" model="ir.actions.act_url">
+        <field name="name">Fee Dashboard</field>
+        <field name="type">ir.actions.act_url</field>
+        <field name="url">/admin/fee-dashboard</field>
+        <field name="target">self</field>
+    </record>
+
+    <record id="action_student_dashboard" model="ir.actions.act_url">
+        <field name="name">Student Dashboard</field>
+        <field name="type">ir.actions.act_url</field>
+        <field name="url">/admin/student-dashboard</field>
+        <field name="target">self</field>
+    </record>
+
+    <!-- Main Menu Structure -->
+    <menuitem id="menu_dashboard_root" name="Admin Dashboards" sequence="10"/>
+
+    <!-- Fee Dashboard Menu -->
+    <menuitem id="menu_fee_dashboard"
+              name="Fee Collection"
+              parent="dashboard.menu_dashboard_root"
+              action="action_fee_dashboard"
+              sequence="10"/>
+
+    <!-- Student Dashboard Menu -->
+    <menuitem id="menu_student_dashboard"
+              name="Student Statistics"
+              parent="dashboard.menu_dashboard_root"
+              action="action_student_dashboard"
+              sequence="20"/>
+
+
+    <!--  menus  -->
+    <menuitem id="menu_dashboard_main"
+              name="Dashboards"
+              parent="school_core.menu_school_root"
+              sequence="10"
+              groups="dashboard.group_dashboard_admin"/>
+
+    <menuitem id="menu_dashboard_root"
+              name="Admin Dashboards"
+              parent="dashboard.menu_dashboard_main"
+              sequence="10"
+              groups="dashboard.group_dashboard_admin"/>
+
+
+</odoo>

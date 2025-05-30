@@ -1,0 +1,37 @@
+ <odoo>
+
+  
+   
+ 
+    <template id="report_exam_report_template">
+        <t t-call="web.external_layout">
+            <div class="page">
+                <h2 style="text-align: center;">Exam Report</h2>
+                <p><strong>Student:</strong> <t t-esc="doc.student_id.name"/></p>
+                <p><strong>Exam:</strong> <t t-esc="doc.exam_id.name"/></p>
+                <p><strong>Average Score:</strong> <t t-esc="doc.average_score"/></p>
+
+                <table class="table table-sm" style="margin-top: 20px; width: 100%;">
+                    <thead>
+                        <tr>
+                            <th>Subject</th>
+                            <th>Marks</th>
+                            <th>Grade</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <t t-foreach="doc.result_ids" t-as="line">
+                            <tr>
+                                <td><t t-esc="line.subject_id.name"/></td>
+                                <td><t t-esc="line.marks_obtained"/></td>
+                                <td><t t-esc="line.grade"/></td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+
+   
+</odoo>

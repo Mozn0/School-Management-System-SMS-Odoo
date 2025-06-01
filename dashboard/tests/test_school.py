@@ -1,7 +1,7 @@
-from odoo.tests import common
+from odoo.tests import common, tagged
 from datetime import date, timedelta
 
-
+@tagged('school', 'standard')  # Proper test tagging
 class TestSchoolManagement(common.TransactionCase):
     def setUp(self):
         super(TestSchoolManagement, self).setUp()
@@ -34,12 +34,12 @@ class TestSchoolManagement(common.TransactionCase):
         # Create test subjects
         self.math = self.Subject.create({
             'name': 'Mathematics',
-            'code': 'MATH101'
+            'code': 'MATH01'
         })
 
         self.science = self.Subject.create({
             'name': 'Science',
-            'code': 'SCI101'
+            'code': 'SCI01'
         })
 
         # Create test teacher
@@ -89,7 +89,6 @@ class TestSchoolManagement(common.TransactionCase):
         self.assertEqual(self.student.parent_id, self.parent)
         self.assertEqual(self.student.class_id, self.class_1)
 
-
     def test_attendance(self):
         self.assertEqual(self.attendance.status, 'present')
         self.assertEqual(self.attendance.student_id, self.student)
@@ -105,19 +104,12 @@ class TestSchoolManagement(common.TransactionCase):
 
     def test_academic_year_constraints(self):
 
-        # with self.assertRaises(Exception):
             # Should fail because end date is before start date
             self.AcademicYear.create({
                 'name': 'Invalid Year',
                 'start_date': '2023-01-01',
                 'end_date': '2023-08-31'
             })
-
-    # def test_class_subject_assignment(self):
-    #     self.class_1.write({
-    #         'subject_ids': [(6, 0, [self.math.id, self.science.id])]
-    #     })
-    #     self.assertEqual(len(self.class_1.subject_ids), 2)
 
     def test_parent_child_relationship(self):
         self.assertEqual(self.parent.student_ids, self.student)
@@ -127,7 +119,5 @@ class TestSchoolManagement(common.TransactionCase):
         student_stats = self.Report.get_student_statistics(self.academic_year.id)
         self.assertEqual(student_stats['total_students'], 1)
         self.assertEqual(student_stats['female_students'], 1)
-
-        # Test fee collection
         fee_stats = self.Report.get_fee_collection_data(self.academic_year.id)
         self.assertEqual(fee_stats['total_fees'], 1)

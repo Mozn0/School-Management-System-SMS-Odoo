@@ -5,7 +5,29 @@
         <t t-call="website.layout">
             <div class="oe_structure">
                 <div class="container mt-4">
-
+                    <!-- Back Button Section -->
+                    <style>
+                        .btn-back {
+                        background-color: #6c757d;
+                        color: white;
+                        padding: 8px 16px;
+                        border-radius: 4px;
+                        transition: all 0.3s;
+                        }
+                        .btn-back:hover {
+                        background-color: #5a6268;
+                        color: white;
+                        text-decoration: none;
+                        }
+                    </style>
+                    <div class="row mb-3">
+                        <div class="col-12">
+                            <a t-att-href="back_url" class="btn btn-secondary mb-3">
+                                <i class="fa fa-arrow-left"/>
+                                Back to Student List
+                            </a>
+                        </div>
+                    </div>
                     <div class="row mb-4">
                         <div class="col-12">
                             <h2 class="text-center">Fee Collection Dashboard</h2>
@@ -104,40 +126,75 @@
                         </div>
                     </div>
 
-                      <!-- Monthly Collection -->
+                    <!-- Monthly Collection -->
 
                     <t t-if="fee_stats.get('show_monthly', False)">
                         <div class="row">
-                              <div class="col-12">
-                                  <div class="card">
-                                      <div class="card-header">
-                                          <h5>Monthly Collection</h5>
-                                      </div>
-                                      <div class="card-body">
-                                          <table class="table table-striped">
-                                              <thead>
-                                                  <tr>
-                                                      <th>Month</th>
-                                                      <th>Amount Collected</th>
-                                                  </tr>
-                                              </thead>
-                                              <tbody>
-                                                  <t t-foreach="fee_stats['monthly_data']" t-as="month">
-                                                      <tr>
-                                                          <td>
-                                                              <t t-esc="month"/>
-                                                          </td>
-                                                          <td>
-                                                              <t t-esc="fee_stats['monthly_data'][month]"/>
-                                                          </td>
-                                                      </tr>
-                                                  </t>
-                                              </tbody>
-                                          </table>
-                                      </div>
-                                  </div>
-                              </div>
-                          </div>
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5>Monthly Collection</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Month</th>
+                                                    <th>Amount Collected</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <t t-foreach="fee_stats['monthly_data']" t-as="month">
+                                                    <tr>
+                                                        <td>
+                                                            <t t-esc="month"/>
+                                                        </td>
+                                                        <td>
+                                                            <t t-esc="fee_stats['monthly_data'][month]"/>
+                                                        </td>
+                                                    </tr>
+                                                </t>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+
+                    <!-- yearly collection -->
+                    <t t-if="fee_stats.get('show_yearly', False)">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-header">
+                                        <h5>Yearly Collection</h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <table class="table table-striped">
+                                            <thead>
+                                                <tr>
+                                                    <th>Academic Year</th>
+                                                    <th>Amount Collected</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <t t-foreach="fee_stats['yearly_data']" t-as="year">
+                                                    <tr>
+                                                        <td>
+                                                            <t t-esc="year"/>
+                                                        </td>
+                                                        <td>
+                                                            <t t-esc="fee_stats['yearly_data'][year]"/>
+                                                        </td>
+                                                    </tr>
+                                                </t>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </t>
 
                 </div>
@@ -150,8 +207,30 @@
         <t t-call="website.layout">
             <div class="oe_structure">
                 <div class="container mt-4">
-
+                    <!-- Back Button Section -->
+                    <style>
+                        .btn-back {
+                        background-color: #6c757d;
+                        color: white;
+                        padding: 8px 16px;
+                        border-radius: 4px;
+                        transition: all 0.3s;
+                        }
+                        .btn-back:hover {
+                        background-color: #5a6268;
+                        color: white;
+                        text-decoration: none;
+                        }
+                    </style>
                     <div class="row mb-3">
+                        <div class="row mb-3">
+                            <div class="col-12">
+                                <a t-att-href="back_url" class="btn btn-back">
+                                    <i class="fa fa-arrow-left mr-2"></i>
+                                    Back to Students List
+                                </a>
+                            </div>
+                        </div>
                         <div class="col-md-6 offset-md-3">
                             <div class="card">
                                 <div class="card-body">

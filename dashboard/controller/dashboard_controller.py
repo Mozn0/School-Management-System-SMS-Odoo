@@ -15,6 +15,9 @@ class DashboardController(http.Controller):
 
         fee_stats['show_monthly'] = bool(academic_year_id)  # False when "All Academic Years"
 
+        action = request.env.ref('school_core.action_school_student')
+        back_url = f"/web#action={action.id}&model=school.student&view_type=list"
+
         selected_year = None
         if academic_year_id:
             selected_year = request.env['school.academic.year'].sudo().browse(int(academic_year_id))
@@ -23,14 +26,16 @@ class DashboardController(http.Controller):
             'fee_stats': fee_stats,
             'academic_years': years,
             'selected_year_id': academic_year_id,
-            'selected_year_name': selected_year.name if selected_year else "All Academic Years"
+            'selected_year_name':fee_stats['selected_year'],
+            'back_url': back_url,
         })
 
     @http.route('/admin/student-dashboard', type='http', auth='user', website=True)
     def student_dashboard(self, **kwargs):
         if not request.env.user.has_group('dashboard.group_dashboard_admin'):
             return request.redirect('/web/login')
-
+        action = request.env.ref('school_core.action_school_student')
+        back_url = f"/web#action={action.id}&model=school.student&view_type=list"
         academic_year_id = kwargs.get('academic_year_id', '')
         student_stats = request.env['school.report'].get_student_statistics(
             academic_year_id if academic_year_id else False
@@ -41,5 +46,6 @@ class DashboardController(http.Controller):
             'student_stats': student_stats,
             'academic_years': years,
             'selected_year_id': academic_year_id,
-            'selected_year_name': student_stats['academic_year']
+            'selected_year_name': student_stats['academic_year'],
+            'back_url': back_url
         })

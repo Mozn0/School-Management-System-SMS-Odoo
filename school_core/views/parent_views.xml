@@ -12,6 +12,7 @@
                         <field name="phone"/>
                         <field name="email"/>
                         <field name="address"/>
+                         <field name="student_ids" widget="many2many_tags" />
                     </group>
                     <notebook>
                         <page string="Children">
